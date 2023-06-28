@@ -10,6 +10,8 @@ import {
   TopNavigation
 } from "@atlaskit/page-layout";
 import TextArea from "@atlaskit/textarea";
+import TagGroup from '@atlaskit/tag-group';
+import Tag from '@atlaskit/tag';
 import {
   Toast,
   Typography
@@ -34,32 +36,23 @@ const AtlassianProductHome = () => (
 );
 
 const defaultTask = {
-  description: "",
-  userName: "",
-  completed: false,
+  prompt: "",
+  // imgac:""
 };
 const DefaultSettings = () => <Settings tooltip="Product settings" />;
 
 export const App = () => {
   const task = useAsync(getCurrentTask, []);
-  const { description, userName, completed } = task.result ?? defaultTask;
+  const { prompt } = task.result ?? defaultTask;
+
+  // console.log(prompt)
 
   // 切换上下一条记录时，触发 SelectionChange
   useEffect(() => {
     return bitable.base.onSelectionChange(({ data }) =>
       task.execute()
     );
-  }, []);
-
-  const toggleCompleted = () => {
-    setCompleted(!completed)
-      .then(() => task.execute())
-      .then(() => Toast.success("更新任务状态成功"))
-      .catch(() => Toast.error("更新任务状态失败"));
-  };
-
-  // if (task.loading) return <div>loading</div>;
-  // if (task.error) return <div>error: {task.error.message}</div>;
+  }, [task]);
 
   return (
     <PageLayout>
@@ -79,9 +72,19 @@ export const App = () => {
           resize="auto"
           maxHeight="20vh"
           name="area"
-          defaultValue="Add a message here"
+          defaultValue={prompt}
         />
+
+        <TagGroup>
+          {prompt.split(",").map((n, i)=>(
+            <Tag text={n} key={i} removeButtonLabel="Remove" />
+          ))}
+        </TagGroup>
       </Content>
+
+        
+
+      
     </PageLayout>
   );
 };

@@ -11,6 +11,8 @@
     "@atlaskit/atlassian-navigation": "^2.6.9",
     "@atlaskit/logo": "^13.14.7",
     "@atlaskit/page-layout": "^1.7.3",
+    "@atlaskit/tag": "^11.5.4",
+    "@atlaskit/tag-group": "^10.2.3",
     "@atlaskit/textarea": "^4.7.2",
     "@douyinfe/semi-ui": "^2.22.3",
     "@lark-opdev/block-bitable-api": "^0.1.0",
