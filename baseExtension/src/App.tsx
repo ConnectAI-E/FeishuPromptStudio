@@ -1,23 +1,44 @@
-import { bitable } from "@lark-opdev/block-bitable-api";
-import { FC, useEffect } from "react";
-import { useAsync } from "react-async-hook";
-import { getCurrentTask, setCompleted } from "./utils";
 import {
-  Typography,
-  Tag,
-  Button,
-  Divider,
-  Space,
+  AtlassianNavigation,
+  CustomProductHome,
+  PrimaryButton,
+  Settings
+} from "@atlaskit/atlassian-navigation";
+import {
+  Content,
+  PageLayout,
+  TopNavigation
+} from "@atlaskit/page-layout";
+import TextArea from "@atlaskit/textarea";
+import {
   Toast,
+  Typography
 } from "@douyinfe/semi-ui";
-
+import { bitable } from "@lark-opdev/block-bitable-api";
+import { useEffect } from "react";
+import { useAsync } from "react-async-hook";
+import iconLogo from "./asset/logo2.svg";
+import { getCurrentTask, setCompleted } from "./utils";
 const { Title, Text } = Typography;
+
+
+const AtlassianProductHome = () => (
+  <CustomProductHome
+    href="#"
+    siteTitle="FPS"
+    iconUrl={iconLogo}
+    iconAlt="Feishu Prompt Studio"
+    logoUrl={iconLogo}
+    logoAlt="Feishu Prompt Studio"
+  />
+);
 
 const defaultTask = {
   description: "",
   userName: "",
   completed: false,
 };
+const DefaultSettings = () => <Settings tooltip="Product settings" />;
 
 export const App = () => {
   const task = useAsync(getCurrentTask, []);
@@ -41,56 +62,26 @@ export const App = () => {
   // if (task.error) return <div>error: {task.error.message}</div>;
 
   return (
-    <PureTaskComponment
-      description={description}
-      userName={userName}
-      completed={completed}
-      toggleCompleted={toggleCompleted}
-    />
-  );
-};
-
-interface PureTaskComponmentProps {
-  description: string;
-  userName: string;
-  completed: boolean;
-  toggleCompleted: () => void;
-}
-
-const PureTaskComponment: FC<PureTaskComponmentProps> = ({
-  description,
-  userName,
-  completed,
-  toggleCompleted,
-}) => {
-  return (
-    <Space vertical align="start">
-      <div>
-        <Title heading={2}>任务管小应用</Title>
-      </div>
-      <div>
-        <Text>描述：</Text>
-        <Text>{description}</Text>
-      </div>
-      <div>
-        <Text>执行人：</Text>
-        <Text>{userName}</Text>
-      </div>
-      <div>
-        <Text>完成状态：</Text>
-        <Tag color={completed ? "green" : "blue"}>
-          {completed ? "已完成" : "未完成"}
-        </Tag>
-      </div>
-      <Divider />
-      <div>
-        <Button
-          type={completed ? "danger" : "primary"}
-          onClick={toggleCompleted}
-        >
-          {completed ? "撤销完成任务" : "完成任务"}
-        </Button>
-      </div>
-    </Space>
+    <PageLayout>
+      <TopNavigation>
+        <AtlassianNavigation
+          label="site"
+          renderSettings={DefaultSettings}
+          primaryItems={[
+            <PrimaryButton>Feishu Prompt Studio</PrimaryButton>
+          ]}
+          renderProductHome={AtlassianProductHome}
+        />
+      </TopNavigation>
+      <Content>
+        <TextArea
+          minimumRows={3}
+          resize="auto"
+          maxHeight="20vh"
+          name="area"
+          defaultValue="Add a message here"
+        />
+      </Content>
+    </PageLayout>
   );
 };
