@@ -1,9 +1,5 @@
 import {
-  IOpenAttachment,
-  IOpenCheckbox,
   IOpenSegment,
-  IOpenCellValue,
-  getAttachmentUrl,
   bitable
 } from "@lark-opdev/block-bitable-api";
 
