@@ -17,7 +17,7 @@ import {
 import { bitable } from "@lark-opdev/block-bitable-api";
 import { useEffect } from "react";
 import { useAsync } from "react-async-hook";
-import iconLogo from "./asset/logo2.svg";
+import iconLogo from "./asset/logo.svg";
 import { getCurrentTask, setCompleted } from "./utils";
 const { Title, Text } = Typography;
 
