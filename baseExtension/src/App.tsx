@@ -1,25 +1,43 @@
-import { bitable,setCellValue } from "@lark-opdev/block-bitable-api";
-import { FC, useEffect, useState } from "react";
-import { useAsync } from "react-async-hook";
-import { getCurrentTask, setCompleted } from "./utils";
-import { bitableApp } from "@bitable/open-client-isv";
 import {
-  Typography,
-  Tag,
-  Button,
-  Divider,
-  Space,
+  AtlassianNavigation,
+  CustomProductHome,
+  PrimaryButton,
+  Settings
+} from "@atlaskit/atlassian-navigation";
+import {
+  Content,
+  PageLayout,
+  TopNavigation
+} from "@atlaskit/page-layout";
+import TextArea from "@atlaskit/textarea";
+import {
   Toast,
-  TextArea,
-  Input,
+  Typography
 } from "@douyinfe/semi-ui";
-
+import { bitable } from "@lark-opdev/block-bitable-api";
+import { useEffect } from "react";
+import { useAsync } from "react-async-hook";
+import iconLogo from "./asset/logo.svg";
+import { getCurrentTask, setCompleted } from "./utils";
 const { Title, Text } = Typography;
+
+
+const AtlassianProductHome = () => (
+  <CustomProductHome
+    href="#"
+    siteTitle="FPS"
+    iconUrl={iconLogo}
+    iconAlt="Feishu Prompt Studio"
+    logoUrl={iconLogo}
+    logoAlt="Feishu Prompt Studio"
+  />
+);
 
 const defaultTask = {
   prompt: "",
   // imgac:""
 };
+const DefaultSettings = () => <Settings tooltip="Product settings" />;
 
 export const App = () => {
   const task = useAsync(getCurrentTask, []);
@@ -35,29 +53,26 @@ export const App = () => {
   }, [task]);
 
   return (
-    <PureTaskComponment
-      prompt={prompt}
-    />
-  );
-};
-
-interface PureTaskComponmentProps {
-  prompt: string;
-}
-
-const PureTaskComponment: FC<PureTaskComponmentProps> = ({
-  prompt,
-}) => {
-
-  return (
-    <Space vertical align="start">
-      <div>
+    <PageLayout>
+      <TopNavigation>
+        <AtlassianNavigation
+          label="site"
+          renderSettings={DefaultSettings}
+          primaryItems={[
+            <PrimaryButton>Feishu Prompt Studio</PrimaryButton>
+          ]}
+          renderProductHome={AtlassianProductHome}
+        />
+      </TopNavigation>
+      <Content>
         <TextArea
-          autosize
-          style={{ width: "36rem",padding:"5px",margin:"10px" }}
-          value={prompt}>
-        </TextArea>
-      </div>
-    </Space>
+          minimumRows={3}
+          resize="auto"
+          maxHeight="20vh"
+          name="area"
+          defaultValue="Add a message here"
+        />
+      </Content>
+    </PageLayout>
   );
 };
