@@ -9,18 +9,17 @@ import {
   PageLayout,
   TopNavigation
 } from "@atlaskit/page-layout";
-import TextArea from "@atlaskit/textarea";
-import TagGroup from '@atlaskit/tag-group';
 import Tag from '@atlaskit/tag';
+import TagGroup from '@atlaskit/tag-group';
+import TextArea from "@atlaskit/textarea";
 import {
-  Toast,
   Typography
 } from "@douyinfe/semi-ui";
 import { bitable } from "@lark-opdev/block-bitable-api";
 import { useEffect } from "react";
 import { useAsync } from "react-async-hook";
 import iconLogo from "./asset/logo.svg";
-import { getCurrentTask, setCompleted } from "./utils";
+import { getCurrentTask } from "./utils";
 const { Title, Text } = Typography;
 
 
