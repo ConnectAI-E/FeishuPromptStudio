@@ -74,13 +74,15 @@ export const App = () => {
           name="area"
           defaultValue={prompt}
         />
-      </Content>
 
         <TagGroup>
           {prompt.split(",").map((n, i)=>(
             <Tag text={n} key={i} removeButtonLabel="Remove" />
           ))}
         </TagGroup>
+      </Content>
+
+        
 
       
     </PageLayout>
