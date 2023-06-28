@@ -10,6 +10,8 @@ import {
   TopNavigation
 } from "@atlaskit/page-layout";
 import TextArea from "@atlaskit/textarea";
+import TagGroup from '@atlaskit/tag-group';
+import Tag from '@atlaskit/tag';
 import {
   Toast,
   Typography
@@ -43,7 +45,7 @@ export const App = () => {
   const task = useAsync(getCurrentTask, []);
   const { prompt } = task.result ?? defaultTask;
 
-  console.log(task);
+  // console.log(prompt)
 
   // 切换上下一条记录时，触发 SelectionChange
   useEffect(() => {
@@ -70,9 +72,17 @@ export const App = () => {
           resize="auto"
           maxHeight="20vh"
           name="area"
-          defaultValue="Add a message here"
+          defaultValue={prompt}
         />
       </Content>
+
+        <TagGroup>
+          {prompt.split(",").map((n, i)=>(
+            <Tag text={n} key={i} removeButtonLabel="Remove" />
+          ))}
+        </TagGroup>
+
+      
     </PageLayout>
   );
 };
