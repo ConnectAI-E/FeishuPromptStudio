@@ -12,6 +12,8 @@ const {
 const cwd = process.cwd();
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isProduction = process.env.NODE_ENV === 'production';
+const tailwindcss = require('tailwindcss')
+const autoprefixer = require('autoprefixer') // help tailwindcss to work
 
 const config = {
   entry: './src/index.tsx',
@@ -25,12 +27,7 @@ const config = {
   },
   module: {
     rules: [
-      {
-        test: /\.js$/,
-        include: [/node_modules\/@lark-open/],
-        use: ['source-map-loader'],
-        enforce: 'pre',
-      },
+      { test: /\.(js|jsx)$/, exclude: /node_modules/, use: ['babel-loader'] },
       {
         oneOf: [
           {
@@ -52,8 +49,18 @@ const config = {
             use: [
               isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
               'css-loader',
+              {
+                loader: 'postcss-loader',
+                options: {
+                  postcssOptions: {
+                    ident: 'postcss',
+                    plugins: [tailwindcss, autoprefixer],
+                  },
+                },
+              }
             ],
           },
+      
           {
             test: /\.less$/,
             use: [
