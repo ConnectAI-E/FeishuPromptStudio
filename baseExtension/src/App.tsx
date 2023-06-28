@@ -52,7 +52,7 @@ export const App = () => {
     return bitable.base.onSelectionChange(({ data }) =>
       task.execute()
     );
-  }, [task]);
+  }, []);
 
   return (
     <PageLayout>
