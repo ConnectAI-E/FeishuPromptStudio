@@ -9,16 +9,18 @@ import {
   PageLayout,
   TopNavigation
 } from "@atlaskit/page-layout";
+import Tag from '@atlaskit/tag';
+import TagGroup from '@atlaskit/tag-group';
 import TextArea from "@atlaskit/textarea";
 import {
-  Toast,
   Typography
 } from "@douyinfe/semi-ui";
 import { bitable } from "@lark-opdev/block-bitable-api";
 import { useEffect } from "react";
 import { useAsync } from "react-async-hook";
 import iconLogo from "./asset/logo.svg";
-import { getCurrentTask, setCompleted } from "./utils";
+import { getCurrentTask } from "./utils";
+import "./index.css";
 const { Title, Text } = Typography;
 
 
@@ -34,15 +36,16 @@ const AtlassianProductHome = () => (
 );
 
 const defaultTask = {
-  description: "",
-  userName: "",
-  completed: false,
+  prompt: "",
+  // imgac:""
 };
 const DefaultSettings = () => <Settings tooltip="Product settings" />;
 
 export const App = () => {
   const task = useAsync(getCurrentTask, []);
-  const { description, userName, completed } = task.result ?? defaultTask;
+  const { prompt } = task.result ?? defaultTask;
+
+  // console.log(prompt)
 
   // 切换上下一条记录时，触发 SelectionChange
   useEffect(() => {
@@ -51,36 +54,31 @@ export const App = () => {
     );
   }, []);
 
-  const toggleCompleted = () => {
-    setCompleted(!completed)
-      .then(() => task.execute())
-      .then(() => Toast.success("更新任务状态成功"))
-      .catch(() => Toast.error("更新任务状态失败"));
-  };
-
-  // if (task.loading) return <div>loading</div>;
-  // if (task.error) return <div>error: {task.error.message}</div>;
-
   return (
     <PageLayout>
       <TopNavigation>
         <AtlassianNavigation
           label="site"
           renderSettings={DefaultSettings}
-          primaryItems={[
-            <PrimaryButton>Feishu Prompt Studio</PrimaryButton>
-          ]}
+          primaryItems={[<PrimaryButton>Feishu Prompt Studio</PrimaryButton>]}
           renderProductHome={AtlassianProductHome}
         />
       </TopNavigation>
       <Content>
-        <TextArea
-          minimumRows={3}
-          resize="auto"
-          maxHeight="20vh"
-          name="area"
-          defaultValue="Add a message here"
-        />
+        <div className="flex-1 py-2 px-4">
+          <div>
+            <div className="text-red pb-1 font-bold">提示词</div>
+          </div>
+          <div>
+            <TextArea
+              minimumRows={3}
+              resize="auto"
+              maxHeight="20vh"
+              name="area"
+              defaultValue={prompt}
+            />
+          </div>
+        </div>
       </Content>
     </PageLayout>
   );
